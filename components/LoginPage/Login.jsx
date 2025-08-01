@@ -1,33 +1,48 @@
-import './Login.css';
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import './Login.css'
 
 function Login() {
-  const navigate = useNavigate();
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const navigate = useNavigate()
 
-  const handleLogin = (e) => {
-    e.preventDefault();
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    // Simple validation
     if (email && password) {
-      alert('Logged in successfully!');
-      navigate('/');
-    } else {
-      alert('Please fill in all fields');
+      // In a real app, you would authenticate here
+      navigate('/')
     }
-  };
+  }
 
   return (
-    <div className="login-container">
-      <h2>Login</h2>
-      <form onSubmit={handleLogin}>
-        <input type="email" placeholder="Email" onChange={(e) => setEmail(e.target.value)} />
-        <input type="password" placeholder="Password" onChange={(e) => setPassword(e.target.value)} />
+    <div className="login-page">
+      <h1>Login</h1>
+      <form onSubmit={handleSubmit}>
+        <div className="form-group">
+          <label>Email:</label>
+          <input
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+          />
+        </div>
+        <div className="form-group">
+          <label>Password:</label>
+          <input
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            Required
+          />
+        </div>
         <button type="submit">Login</button>
-        <p>Don't have an account? <span onClick={() => navigate('/register')}>Register</span></p>
       </form>
+      <p>Don't have an account? <a href="/register">Register here</a></p>
     </div>
-  );
+  )
 }
 
-export default Login;
+export default Login

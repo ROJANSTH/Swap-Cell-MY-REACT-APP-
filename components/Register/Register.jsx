@@ -1,29 +1,57 @@
-import './Register.css';
-import { useForm } from 'react-hook-form';
-import { useNavigate } from 'react-router-dom';
+import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import './Register.css'
 
 function Register() {
-  const { register, handleSubmit } = useForm();
-  const navigate = useNavigate();
+  const [name, setName] = useState('')
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const navigate = useNavigate()
 
-  const onSubmit = (data) => {
-    localStorage.setItem('user', JSON.stringify(data));
-    alert('Registered Successfully!');
-    navigate('/login');
-  };
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    // Simple validation
+    if (name && email && password) {
+      navigate('/')
+    }
+  }
 
   return (
-    <div className="register-container">
-      <h2>Register</h2>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <input type="text" placeholder="Name" {...register('name')} />
-        <input type="email" placeholder="Email" {...register('email')} />
-        <input type="password" placeholder="Password" {...register('password')} />
+    <div className="register-page">
+      <h1>Register</h1>
+      <form onSubmit={handleSubmit}>
+        <div className="form-group">
+          <label>Full Name:</label>
+          <input
+            type="text"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            required
+          />
+        </div>
+        <div className="form-group">
+          <label>Email:</label>
+          <input
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+          />
+        </div>
+        <div className="form-group">
+          <label>Password:</label>
+          <input
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+          />
+        </div>
         <button type="submit">Register</button>
-        <p>Already have an account? <span onClick={() => navigate('/login')}>Login</span></p>
       </form>
+      <p>Already have an account? <a href="/login">Login here</a></p>
     </div>
-  );
+  )
 }
 
-export default Register;
+export default Register
